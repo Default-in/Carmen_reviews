@@ -8,6 +8,8 @@ user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Ge
 
 op = webdriver.ChromeOptions()
 op.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+op.add_experimental_option("excludeSwitches", ["enable-automation"])
+op.add_experimental_option('useAutomationExtension', False)
 op.add_argument("--window-size=1920,1080")
 op.add_argument("--headless")
 op.add_argument(f'user-agent={user_agent}')
