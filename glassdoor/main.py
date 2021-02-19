@@ -1,3 +1,6 @@
-from .subfunctions import *
+from .functions import *
 
+print('Login')
 login()
+print('Start Scrapping')
+companies()

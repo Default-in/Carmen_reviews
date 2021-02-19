@@ -19,6 +19,7 @@ class GlassdoorReview(models.Model):
     reviewPros = models.TextField(null=True)
     reviewCons = models.TextField(null=True)
     reviewDate = models.TextField(null=True)
+    companyUrl = models.TextField(null=True)
 
     def __str__(self):
         return self.companyName
