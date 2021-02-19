@@ -80,7 +80,7 @@
 									<td class="column3">{{ item.wc_in_cons }}</td>
 									<td class="column3">{{ item.total_count }}</td>
 									<td class="column3">{{ item.total_Reviews }}</td>
-									<td class="column3"><a href="{% url %}"><button>Click here</button></a></td>
+									<td class="column3"><a href="{{ item.company_url }}" target="_blank"><button>Click here</button></a></td>
 								</tr>
 						{% endfor %}
 						</tbody>
