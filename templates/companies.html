@@ -1,0 +1,91 @@
+{% load static %}
+<html lang="en">
+<head>
+	<title>Companies Info</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+<!--===============================================================================================-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+
+</head>
+<body>
+
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100">
+					<table>
+						<thead>
+							<tr class="table100-head">
+								<th class="column3">Company Name</th>
+								<th class="column3">Overall Rating</th>
+								<th class="column3">Recommend To Friend</th>
+								<th class="column3">Approve Of CEO</th>
+								<th class="column3">Jobs</th>
+								<th class="column3">Interviews</th>
+								<th class="column3">Benefits</th>
+								<th class="column3">Total Reviews</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for item in queryset %}
+								<tr>
+									<td class="column3">{{ item.company_name }}</td>
+									<td class="column3">{{ item.overall_rating }}</td>
+									<td class="column3">{{ item.recommend_to_friend }}</td>
+									<td class="column3">{{ item.approve_of_ceo }}</td>
+									<td class="column3">{{ item.jobs }}</td>
+									<td class="column3">{{ item.interviews }}</td>
+									<td class="column3">{{ item.benefits }}</td>
+									<td class="column3">{{ item.total_reviews }}</td>
+								</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'js/table.js' %}"></script>
+	<script src="{% static 'js/extention/choices.js' %}"></script>
+	<script>
+      const choices = new Choices('[data-trigger]',
+      {
+        searchEnabled: false,
+        itemSelectText: '',
+      });
+
+    </script>
+
+</body>
+</html>
