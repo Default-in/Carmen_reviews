@@ -72,7 +72,7 @@
 						</thead>
 						<tbody>
 						{% for item in queryset %}
-								<tr data-href="https://carmen-reviews.herokuapp.com/glassdoor/company/{{ item.id }}?word={{ word }}">
+								<tr data-href="http://127.0.0.1:8000/glassdoor/company/{{ item.id }}?word={{ word }}">
 									<td class="column3">{{ item.company_name }}</td>
 									<td class="column3">{{ item.wc_in_heading }}</td>
 									<td class="column3">{{ item.wc_in_descriptions }}</td>
