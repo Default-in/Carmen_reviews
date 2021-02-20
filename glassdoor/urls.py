@@ -1,8 +1,12 @@
 from django.urls import path
-from .views import table, multiplewords, companyInfo
+from .views import table, multiplewords, companyInfo, reviewsInfo
+from .models import GlassdoorReview
+
+qs = GlassdoorReview.objects.all()
 
 urlpatterns = [
-    path('table', table),
-    path('multiplewords', multiplewords),
-    path('companiesinfo', companyInfo),
+    path('glassdoor/table', table),
+    path('glassdoor/multiplewords', multiplewords),
+    path('glassdoor/companiesinfo', companyInfo),
+    path('glassdoor/company/<int:pk>', reviewsInfo),
 ]

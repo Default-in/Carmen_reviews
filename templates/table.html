@@ -32,7 +32,7 @@
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="s003">
-			  <form method="GET" action="/table">
+			  <form method="GET" action="/glassdoor/table">
 				<div class="inner-form">
 				  <div class="input-field first-wrap">
 					<div class="input-select">
@@ -72,7 +72,7 @@
 						</thead>
 						<tbody>
 						{% for item in queryset %}
-								<tr>
+								<tr data-href="https://carmen-reviews.herokuapp.com/glassdoor/company/{{ item.id }}?word={{ word }}">
 									<td class="column3">{{ item.company_name }}</td>
 									<td class="column3">{{ item.wc_in_heading }}</td>
 									<td class="column3">{{ item.wc_in_descriptions }}</td>
@@ -111,6 +111,17 @@
       });
 
     </script>
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const rows = document.querySelectorAll("tr[data-href]");
+
+			rows.forEach(row => {
+				row.addEventListener("click", () => {
+					window.location.href = row.dataset.href;
+				});
+			});
+		});
+	</script>
 
 </body>
 </html>

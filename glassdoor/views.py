@@ -14,6 +14,7 @@ def table(request):
         company = item
         total_reviews = len(list(company.reviewDate.splitlines()))
         if total_reviews != 0:
+            id = item.id
             reviews_headings = company.reviewHeadings.replace('"', '').split()
             reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
             reviews_pros = company.reviewPros.replace('"', '').split()
@@ -46,6 +47,7 @@ def table(request):
                     total_count += 1
 
             result_list = {
+                'id': id,
                 'company_name': company.companyName,
                 'wc_in_heading': total_heading,
                 'wc_in_descriptions': total_desc,
@@ -61,10 +63,11 @@ def table(request):
 
     list_to_show = sorted(list_to_show, key=lambda j: j['total_count'], reverse=True)
     print(len(list_to_show))
-    for item in list_to_show:
-        print(item)
+    # for item in list_to_show:
+    #     print(item)
 
     context = {
+        'word': word,
         'queryset': list_to_show,
     }
 
@@ -175,3 +178,75 @@ def multiplewords(request):
     }
 
     return render(request, 'multipleWords.html', context)
+
+
+def reviewsInfo(request, pk):
+    qs = GlassdoorReview.objects.get(pk=pk)
+    search_word = request.GET.get('word')
+    print(search_word)
+
+    word = "life"
+    # company_info_list = []
+    # company_info = {
+    #     'company_name': qs.companyName,
+    #     'total_reviews': qs.totalReviews,
+    #     'overall_rating': qs.overallRatings,
+    # }
+    list_to_show = []
+    date_list = list(qs.reviewDate.splitlines())
+    pros = list(qs.reviewPros.splitlines())
+    cons = list(qs.reviewCons.splitlines())
+    headings = list(qs.reviewHeadings.splitlines())
+    descriptions = list(qs.reviewDescriptions.splitlines())
+    # print(date_list)
+    # print(pros)
+    # print(cons)
+    # print(headings)
+    # print(descriptions)
+
+    reviews_headings = list(qs.reviewHeadings.replace('"', '').split())
+    reviews_descriptions = list(qs.reviewDescriptions.replace('"', '').split())
+    reviews_pros = list(qs.reviewPros.replace('"', '').split())
+    reviews_cons = list(qs.reviewCons.replace('"', '').split())
+
+    conditions = [
+        word in reviews_headings,
+        word in reviews_descriptions,
+        word in reviews_pros,
+        word in reviews_cons,
+    ]
+
+    total_reviews = len(date_list)
+    for i in range(total_reviews):
+        if search_word in headings[i] or word in descriptions[i] or word in pros or word in cons:
+            # print(date_list[i])
+            # print(headings[i])
+            # print(descriptions[i])
+            # print(pros[i])
+            # print(cons[i])
+            # print("=======================\n")
+            result_list = {
+                "review_date": date_list[i],
+                "review_heading": headings[i],
+                "review_descriptions": descriptions[i],
+                "review_pros": pros[i],
+                "review_cons": cons[i],
+            }
+
+            list_to_show.append(result_list)
+            # pass
+        else:
+            # print(f"No - {i}")
+            pass
+
+    context = {
+        'pk': pk,
+        'queryset': list_to_show,
+    }
+
+    return render(request, 'reviewinfo.html', context)
+
+
+
+
+

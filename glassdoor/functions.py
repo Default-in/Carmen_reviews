@@ -7,18 +7,8 @@ def login():
     try:
         driver.get('https://www.glassdoor.com/index.htm')
         driver.maximize_window()
-        for cookie in cookies:
-            driver.add_cookie(cookie)
         print(driver.title)
-        wait(10)
-        driver.get('https://www.glassdoor.com/Explore/top-companies-us_IL.14,16_IN1.htm')
-        wait(10)
-    except Exception as e:
-        print(e)
-        driver.get('https://www.glassdoor.com/index.htm')
-        driver.maximize_window()
-        print(driver.title)
-        wait(10)
+        # wait(10)
         driver.find_element_by_xpath('//*[@id="TopNav"]/nav/div/div/div[4]/div[1]/a').click()
         username = driver.find_element_by_xpath('//*[@id="userEmail"]')
         password = driver.find_element_by_xpath('//*[@id="userPassword"]')
@@ -31,8 +21,27 @@ def login():
             '//*[@id="LoginModal"]/div/div/div[2]/div[2]/div[2]/div/div/div/div[3]/form/div[3]/div[1]/button')
         sign_in.click()
         wait(10)
-        driver.get('https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=2&isHiringSurge=0&locId=1&locType=N&locName=US')
-        wait(20)
+        driver.get(
+            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=7&isHiringSurge=0&locId=1&locType=N&locName=US')
+        wait(15)
+
+    except Exception as e:
+        print(e)
+        driver.find_element_by_xpath('//*[@id="SiteNav"]/nav/div[2]/div/div/div/button').click()
+        username = driver.find_element_by_xpath('//*[@id="userEmail"]')
+        password = driver.find_element_by_xpath('//*[@id="userPassword"]')
+        wait(2)
+        username.send_keys('sk0196146@gmail.com')
+        wait(2)
+        password.send_keys('P@ssw0rd9')
+        wait(2)
+        sign_in = driver.find_element_by_xpath(
+            '//*[@id="LoginModal"]/div/div/div[2]/div[2]/div[2]/div/div/div/div[3]/form/div[3]/div[1]/button')
+        sign_in.click()
+        wait(10)
+        driver.get(
+            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=7&isHiringSurge=0&locId=1&locType=N&locName=US')
+        wait(15)
 
 
 # Reviews scrap
@@ -44,7 +53,7 @@ def review_scrapped(j):
     pros = ""
     cons = ""
     try:
-        while i != 100:
+        while i != 101:
             print(f'Page number - {i}')
             wait(1)
             # Click on continue reading
@@ -181,21 +190,26 @@ def scrap_data():
     try:
         i = 1
         while i < 11:
-            driver.switch_to.window(driver.window_handles[0])
             wait(5)
             if i != 11:
-                target = driver.find_element_by_xpath(f'//*[@id="ReactCompanyExplorePageContainer"]/div/div/div/div['
-                                                      f'2]/div[2]/section[{i}]/div/div[1]/div/div[2]/span/h2')
-                scroll_till_target(target)
-                target.click()
-                wait(5)
+                try:
+                    target = driver.find_element_by_xpath(f'//*[@id="ReactCompanyExplorePageContainer"]/div/div/div'
+                                                          f'/div[2]/div[2]/section[{i}]/div/div[1]/div/div[2]/span/h2')
+                    scroll_till_target(target)
+                    target.click()
+                    wait(5)
+                except:
+                    target = driver.find_element_by_xpath(f'//*[@id="ReactCompanyExplorePageContainer"]/div/div/div'
+                                                          f'/div/div[2]/section[{i}]/div/div[1]/div/div[2]/span/h2')
+                    scroll_till_target(target)
+                    target.click()
+                    wait(5)
                 base_window = driver.window_handles[0]
                 print(driver.window_handles)
                 # Switch to companies window
                 driver.switch_to.window(driver.window_handles[1])
-                wait(10)
+                # wait(10)
                 try:
-                    # Company Name
                     company_name = driver.find_element_by_xpath('//*[@id="DivisionsDropdownComponent"]').text
                     print(company_name)
                     total_reviews = driver.find_element_by_xpath('//*[@id="EIProductHeaders"]/div/a[1]/span[1]').text
@@ -291,14 +305,15 @@ def scrap_data():
             # Go to the companies page
             wait(2)
             driver.close()
+            driver.switch_to.window(driver.window_handles[0])
             wait(2)
             i += 1
     except Exception as ex:
         print(ex)
 
 
-def companies():
-    j = 2
+def companies(i):
+    j = 7
     print("Start")
     try:
         while j < 100:
@@ -307,12 +322,17 @@ def companies():
                 scrap_data()
             except Exception as ex:
                 print(ex)
-            next_page = driver.find_element_by_xpath('//*[@id="ReactCompanyExplorePageContainer"]/div/div/div/div['
-                                                     '2]/div[3]/div/ul/li[7]/button')
-            scroll_till_target(next_page)
-            next_page.click()
+
+            driver.find_element_by_xpath(
+                '//*[@id="ReactCompanyExplorePageContainer"]/div/div/div/div/div[3]/div/ul/li[7]/button').click()
             wait(20)
             j += 1
 
     except Exception as ex:
+        j += 1
+        url = f'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page={j}&isHiringSurge' \
+              f'=0&locId=1&locType=N&locName=US '
+        driver.get(url)
+        wait(15)
+        companies(j)
         print(ex)
