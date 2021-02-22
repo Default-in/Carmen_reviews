@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import IndeedReview
 
+
 # Create your views here.
 def table(request):
     qs = IndeedReview.objects.all()
@@ -51,3 +52,62 @@ def table(request):
     }
 
     return render(request, 'indeedtable.html', context)
+
+
+def reviewsInfo(request, pk):
+    qs = IndeedReview.objects.get(pk=pk)
+    search_word = request.GET.get('word')
+    print(search_word)
+
+    word = "life"
+    # company_info_list = []
+    # company_info = {
+    #     'company_name': qs.companyName,
+    #     'total_reviews': qs.totalReviews,
+    #     'overall_rating': qs.overallRatings,
+    # }
+    list_to_show = []
+    date_list = list(qs.reviewDate.splitlines())
+    headings = list(qs.reviewHeadings.splitlines())
+    descriptions = list(qs.reviewDescriptions.splitlines())
+    # print(date_list)
+    # print(pros)
+    # print(cons)
+    # print(headings)
+    # print(descriptions)
+
+    reviews_headings = list(qs.reviewHeadings.replace('"', '').split())
+    reviews_descriptions = list(qs.reviewDescriptions.replace('"', '').split())
+
+    conditions = [
+        word in reviews_headings,
+        word in reviews_descriptions,
+    ]
+
+    total_reviews = len(date_list)
+    for i in range(total_reviews):
+        if search_word in headings[i] or word in descriptions[i]:
+            # print(date_list[i])
+            # print(headings[i])
+            # print(descriptions[i])
+            # print(pros[i])
+            # print(cons[i])
+            # print("=======================\n")
+            result_list = {
+                "review_date": date_list[i],
+                "review_heading": headings[i],
+                "review_descriptions": descriptions[i],
+            }
+
+            list_to_show.append(result_list)
+            # pass
+        else:
+            # print(f"No - {i}")
+            pass
+
+    context = {
+        'pk': pk,
+        'queryset': list_to_show,
+    }
+
+    return render(request, 'indeedreviewinfo.html', context)
