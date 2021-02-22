@@ -26,23 +26,23 @@ def table(request):
             total_pros = 0
             total_cons = 0
             company_url = item.companyUrl
-            for rev in reviews_headings:
-                if str(word) in rev.lower():
+            for rev_h in reviews_headings:
+                if str(word) in rev_h.lower():
                     total_heading += 1
                     total_count += 1
 
-            for rev in reviews_descriptions:
-                if str(word) in rev.lower():
+            for rev_d in reviews_descriptions:
+                if str(word) in rev_d.lower():
                     total_desc += 1
                     total_count += 1
 
-            for rev in reviews_pros:
-                if str(word) in rev.lower():
+            for rev_p in reviews_pros:
+                if str(word) in rev_p.lower():
                     total_pros += 1
                     total_count += 1
 
-            for rev in reviews_cons:
-                if str(word) in rev.lower():
+            for rev_c in reviews_cons:
+                if str(word) in rev_c.lower():
                     total_cons += 1
                     total_count += 1
 
@@ -71,7 +71,7 @@ def table(request):
         'queryset': list_to_show,
     }
 
-    return render(request, 'table.html', context)
+    return render(request, 'search.html', context)
 
 
 def companyInfo(request):
@@ -247,6 +247,9 @@ def reviewsInfo(request, pk):
     return render(request, 'reviewinfo.html', context)
 
 
+def test(request):
+    return render(request, 'search.html')
 
 
-
+def testtable(request):
+    return render(request, 'glassdoor.html')

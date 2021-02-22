@@ -1,0 +1,126 @@
+{% load static %}
+<html lang="en">
+  <head>
+	  <title>Glassdoor</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+<!--===============================================================================================-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+    <link href="{% static 'css/mainsearch.css' %}" rel="stylesheet" />
+	  <!--===============================================================================================-->
+	  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	  <link rel="stylesheet" href="{% static 'css/togglebutton.css' %}">
+  </head>
+  <body>
+    <div class="s130">
+      <form method="GET" action="/glassdoor/table">
+        <div class="inner-form">
+          <div class="input-field first-wrap">
+            <div class="svg-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+              </svg>
+            </div>
+            <input id="search" type="text" name="word" placeholder="What are you looking for?" />
+          </div>
+          <div class="input-field second-wrap">
+            <button class="btn-search" type="submit">SEARCH</button>
+          </div>
+        </div>
+        <span class="info">ex. Good, Bad, Stress, Work</span>
+      </form>
+    </div>
+	<div class="btn-group">
+		<a href="/glassdoor/table?word={{ word }}" class="action-button shadow animate green">Glassdoor</a>
+		<a href="#" class="action-button shadow animate blue">Indeed</a>
+	</div>
+	<div class="table100">
+					<table>
+						<thead>
+							<tr class="table100-head">
+								<th class="column3">Company Name</th>
+								<th class="column3">WC in Headings</th>
+								<th class="column3">WC in Descriptions</th>
+								<th class="column3">Total Count</th>
+								<th class="column3">Total Reviews</th>
+								<th class="column3">Company Info</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for item in queryset %}
+								<tr data-href="company/{{ item.id }}?word={{ word }}">
+									<td class="column3">{{ item.company_name }}</td>
+									<td class="column3">{{ item.wc_in_heading }}</td>
+									<td class="column3">{{ item.wc_in_descriptions }}</td>
+									<td class="column3">{{ item.total_count }}</td>
+									<td class="column3">{{ item.total_Reviews }}</td>
+									<td class="column3"><a href="{{ item.company_url }}" target="_blank"><button>Click here</button></a></td>
+								</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+	<script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			var ps = new PerfectScrollbar(this);
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+
+
+	</script>
+
+  <!--===============================================================================================-->
+	<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'js/table.js' %}"></script>
+	<script src="{% static 'js/extention/choices.js' %}"></script>
+	<script>
+      const choices = new Choices('[data-trigger]',
+      {
+        searchEnabled: false,
+        itemSelectText: '',
+      });
+
+    </script>
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const rows = document.querySelectorAll("tr[data-href]");
+
+			rows.forEach(row => {
+				row.addEventListener("click", () => {
+					window.location.href = row.dataset.href;
+				});
+			});
+		});
+	</script>
+
+  </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

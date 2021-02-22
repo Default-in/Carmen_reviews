@@ -37,11 +37,9 @@ def indeedLogin():
     email = driver.find_element_by_xpath('//*[@id="login-email-input"]')
     for word in 'sk0196146@gmail.com':
         email.send_keys(word)
-        wait(0.3)
     password = driver.find_element_by_xpath('//*[@id="login-password-input"]')
     for word in 'P@ssw0rd9':
         password.send_keys(word)
-        wait(0.3)
-    wait(20)
+    wait(30)
     driver.find_element_by_xpath('//*[@id="login-submit-button"]').click()
     wait(10)

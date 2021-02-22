@@ -22,7 +22,8 @@ def login():
         sign_in.click()
         wait(10)
         driver.get(
-            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=7&isHiringSurge=0&locId=1&locType=N&locName=US')
+            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=8&isHiringSurge=0'
+            '&locId=1&locType=N&locName=US')
         wait(15)
 
     except Exception as e:
@@ -40,7 +41,8 @@ def login():
         sign_in.click()
         wait(10)
         driver.get(
-            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=7&isHiringSurge=0&locId=1&locType=N&locName=US')
+            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=12&isHiringSurge=0'
+            '&locId=1&locType=N&locName=US')
         wait(15)
 
 
@@ -313,7 +315,7 @@ def scrap_data():
 
 
 def companies(i):
-    j = 7
+    j = 12
     print("Start")
     try:
         while j < 100:
@@ -323,16 +325,12 @@ def companies(i):
             except Exception as ex:
                 print(ex)
 
-            driver.find_element_by_xpath(
-                '//*[@id="ReactCompanyExplorePageContainer"]/div/div/div/div/div[3]/div/ul/li[7]/button').click()
-            wait(20)
-            j += 1
+            driver.close()
+
+            # driver.find_element_by_xpath(
+            #     '//*[@id="ReactCompanyExplorePageContainer"]/div/div/div/div/div[3]/div/ul/li[7]/button').click()
+            # wait(20)
+            # j += 1
 
     except Exception as ex:
-        j += 1
-        url = f'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page={j}&isHiringSurge' \
-              f'=0&locId=1&locType=N&locName=US '
-        driver.get(url)
-        wait(15)
-        companies(j)
         print(ex)
