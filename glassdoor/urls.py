@@ -9,7 +9,7 @@ urlpatterns = [
     path('glassdoor/multiplewords', multiplewords),
     path('glassdoor/companiesinfo', companyInfo),
     path('glassdoor/company/<int:pk>', reviewsInfo),
-    path('', Home),
+    path('', table),
     path('test', test),
     path('glassdoor/', testtable),
     path('both', singlewordboth),
