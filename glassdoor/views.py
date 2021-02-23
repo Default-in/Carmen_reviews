@@ -64,25 +64,22 @@ def table(request):
 
     list_to_show = sorted(list_to_show, key=lambda j: j['total_count'], reverse=True)
     print(len(list_to_show))
-    # for item in list_to_show:
-    #     print(item)
 
     context = {
         'word': word,
         'queryset': list_to_show,
     }
 
-    return render(request, 'glassdoorSingleWord.html', context)
+    return render(request, 'glassdoor-single.html', context)
+
 
 def Home(request):
     qs = GlassdoorReview.objects.all()
-    total = len(qs)
     word = request.GET.get('word')
     print(word)
 
     list_to_show = []
     for item in qs:
-        # company = GlassdoorReview.objects.get(id=(i+1))
         company = item
         total_reviews = len(list(company.reviewDate.splitlines()))
         if total_reviews != 0:
@@ -176,6 +173,7 @@ def companyInfo(request):
             'jobs': jobs,
             'interviews': interviews,
             'benefits': benefits,
+            'company_url': item.companyUrl,
         }
         main_list.append(result)
 
@@ -185,7 +183,7 @@ def companyInfo(request):
         'queryset': main_list,
     }
 
-    return render(request, 'companies.html', context)
+    return render(request, 'glassdoor-companies.html', context)
 
 
 def multiplewords(request):
@@ -212,19 +210,19 @@ def multiplewords(request):
 
                 total_count = 0
                 for rev in reviews_headings:
-                    if str(word) in rev.lower():
+                    if str(word).lower() in rev.lower():
                         total_count += 1
 
                 for rev in reviews_descriptions:
-                    if str(word) in rev.lower():
+                    if str(word).lower() in rev.lower():
                         total_count += 1
 
                 for rev in reviews_pros:
-                    if str(word) in rev.lower():
+                    if str(word).lower() in rev.lower():
                         total_count += 1
 
                 for rev in reviews_cons:
-                    if str(word) in rev.lower():
+                    if str(word).lower() in rev.lower():
                         total_count += 1
 
                 sub_main_list.append(total_count)
@@ -242,11 +240,6 @@ def multiplewords(request):
         else:
             pass
 
-    # list_to_show = sorted(list_to_show, key=lambda j: j['total_count'], reverse=True)
-    # print(len(list_to_show))
-    # for item in list_to_show:
-    #     print(item)
-    #
     mylist = zip(company_and_total_review_list, main_list)
     context = {
         'word': search_word,
@@ -254,32 +247,22 @@ def multiplewords(request):
         'main_list': mylist,
     }
 
-    return render(request, 'glassdoormultiplewords.html', context)
+    return render(request, 'glassdoor-multiple-words.html', context)
 
 
 def reviewsInfo(request, pk):
     qs = GlassdoorReview.objects.get(pk=pk)
-    search_word = request.GET.get('word')
-    print(search_word)
+    company_name = qs.companyName
+    company_desc = qs.companyDesc
+    word = request.GET.get('word')
+    print(word)
 
-    word = "life"
-    # company_info_list = []
-    # company_info = {
-    #     'company_name': qs.companyName,
-    #     'total_reviews': qs.totalReviews,
-    #     'overall_rating': qs.overallRatings,
-    # }
     list_to_show = []
     date_list = list(qs.reviewDate.splitlines())
     pros = list(qs.reviewPros.splitlines())
     cons = list(qs.reviewCons.splitlines())
     headings = list(qs.reviewHeadings.splitlines())
     descriptions = list(qs.reviewDescriptions.splitlines())
-    # print(date_list)
-    # print(pros)
-    # print(cons)
-    # print(headings)
-    # print(descriptions)
 
     reviews_headings = list(qs.reviewHeadings.replace('"', '').split())
     reviews_descriptions = list(qs.reviewDescriptions.replace('"', '').split())
@@ -295,13 +278,8 @@ def reviewsInfo(request, pk):
 
     total_reviews = len(date_list)
     for i in range(total_reviews):
-        if search_word in headings[i] or word in descriptions[i] or word in pros or word in cons:
-            # print(date_list[i])
-            # print(headings[i])
-            # print(descriptions[i])
-            # print(pros[i])
-            # print(cons[i])
-            # print("=======================\n")
+        if word in headings[i].lower() or word in descriptions[i].lower() or word in pros[i].lower() or word in cons[i].lower():
+
             result_list = {
                 "review_date": date_list[i],
                 "review_heading": headings[i],
@@ -311,21 +289,21 @@ def reviewsInfo(request, pk):
             }
 
             list_to_show.append(result_list)
-            # pass
         else:
-            # print(f"No - {i}")
             pass
 
     context = {
+        'company_name': company_name,
+        'company_description': company_desc,
         'pk': pk,
         'queryset': list_to_show,
     }
 
-    return render(request, 'reviewinfo.html', context)
+    return render(request, 'glassdoor-reviews-info.html', context)
 
 
 def test(request):
-    return render(request, 'search.html')
+    return render(request, 'glassdoor-single.html')
 
 
 def testtable(request):
@@ -379,7 +357,9 @@ def singlewordboth(request):
             reviews_headings = company.reviewHeadings.replace('"', '').split()
             reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
 
-            index = next((count for (count, name) in enumerate(list_to_show) if name["company_name"] == company.companyName), None)
+            index = next(
+                (count for (count, name) in enumerate(list_to_show) if name["company_name"] == company.companyName),
+                None)
 
             for rev_h in reviews_headings:
                 if str(word) in rev_h.lower():

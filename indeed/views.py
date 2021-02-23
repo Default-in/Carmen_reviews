@@ -51,48 +51,25 @@ def table(request):
         'queryset': list_to_show,
     }
 
-    return render(request, 'indeedSingleWord.html', context)
+    return render(request, 'indeed-single.html', context)
 
 
 def reviewsInfo(request, pk):
     qs = IndeedReview.objects.get(pk=pk)
-    search_word = request.GET.get('word')
-    print(search_word)
+    company_name = qs.companyName
+    company_desc = qs.companyDesc
+    word = request.GET.get('word')
+    print(word)
 
-    word = "life"
-    # company_info_list = []
-    # company_info = {
-    #     'company_name': qs.companyName,
-    #     'total_reviews': qs.totalReviews,
-    #     'overall_rating': qs.overallRatings,
-    # }
     list_to_show = []
     date_list = list(qs.reviewDate.splitlines())
     headings = list(qs.reviewHeadings.splitlines())
     descriptions = list(qs.reviewDescriptions.splitlines())
-    # print(date_list)
-    # print(pros)
-    # print(cons)
-    # print(headings)
-    # print(descriptions)
-
-    reviews_headings = list(qs.reviewHeadings.replace('"', '').split())
-    reviews_descriptions = list(qs.reviewDescriptions.replace('"', '').split())
-
-    conditions = [
-        word in reviews_headings,
-        word in reviews_descriptions,
-    ]
 
     total_reviews = len(date_list)
     for i in range(total_reviews):
-        if search_word in headings[i] or word in descriptions[i]:
-            # print(date_list[i])
-            # print(headings[i])
-            # print(descriptions[i])
-            # print(pros[i])
-            # print(cons[i])
-            # print("=======================\n")
+        if word.lower() in headings[i].lower() or word.lower() in descriptions[i].lower():
+
             result_list = {
                 "review_date": date_list[i],
                 "review_heading": headings[i],
@@ -100,17 +77,17 @@ def reviewsInfo(request, pk):
             }
 
             list_to_show.append(result_list)
-            # pass
         else:
-            # print(f"No - {i}")
             pass
 
     context = {
+        'company_name': company_name,
+        'company_description': company_desc,
         'pk': pk,
         'queryset': list_to_show,
     }
 
-    return render(request, 'indeedreviewinfo.html', context)
+    return render(request, 'indeed-reviews-info.html', context)
 
 
 # Multiple Words
@@ -158,11 +135,6 @@ def multiplewords(request):
         else:
             pass
 
-    # list_to_show = sorted(list_to_show, key=lambda j: j['total_count'], reverse=True)
-    # print(len(list_to_show))
-    # for item in list_to_show:
-    #     print(item)
-    #
     mylist = zip(company_and_total_review_list, main_list)
     context = {
         'word': search_word,
@@ -170,4 +142,40 @@ def multiplewords(request):
         'main_list': mylist,
     }
 
-    return render(request, 'indeedmultiplewords.html', context)
+    return render(request, 'indeed-multiple-words.html', context)
+
+
+# Companies Info
+def companyInfo(request):
+    qs = IndeedReview.objects.all()
+
+    main_list = []
+    for item in qs:
+        total_reviews = item.totalReviews
+        review = ''
+        for char in total_reviews:
+            if char != 'K':
+                review += char
+            else:
+                review = float(review) * 1000
+
+        result = {
+            'company_name': item.companyName,
+            'overall_rating': item.overallRating,
+            'work_life_balance': item.workLifeBalance,
+            'pay_and_benefits': item.payAndBenefits,
+            'job_security': item.jobSecurity,
+            'management': item.management,
+            'culture': item.culture,
+            'total_reviews': int(review),
+            'company_url': item.companyUrl,
+        }
+        main_list.append(result)
+
+    main_list = sorted(main_list, key=lambda j: j['total_reviews'], reverse=True)
+
+    context = {
+        'queryset': main_list,
+    }
+
+    return render(request, 'indeed-companies.html', context)

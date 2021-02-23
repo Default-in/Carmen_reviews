@@ -1,0 +1,133 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Title</title>
+    <style>
+        .text-gray-900{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header class="text-gray-600 body-font">
+  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <a href="http://django-env.eba-3a58wzcn.us-west-2.elasticbeanstalk.com/" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+      </svg>
+      <span class="ml-3 text-xl">Carmen Reviews</span>
+    </a>
+    <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+      <a href="http://django-env.eba-3a58wzcn.us-west-2.elasticbeanstalk.com/glassdoor/singleword" class="mr-5 hover:text-gray-900">Single Word</a>
+      <a href="http://django-env.eba-3a58wzcn.us-west-2.elasticbeanstalk.com/glassdoor/multiplewords" class="mr-5 hover:text-gray-900">Multiple Words</a>
+      <a href="http://django-env.eba-3a58wzcn.us-west-2.elasticbeanstalk.com/glassdoor/companiesinfo" class="mr-5 hover:text-gray-900">Glassdoor Companies</a>
+      <a href="http://django-env.eba-3a58wzcn.us-west-2.elasticbeanstalk.com/indeed/companiesinfo" class="mr-5 hover:text-gray-900">Indeed Companies</a>
+    </nav>
+  </div>
+</header>
+<form method="GET" action="">
+    <section class="text-gray-600 body-font max-h-40">
+      <div class="container mx-auto flex flex-col px-5 py-24 justify-center items-center">
+        <div class="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
+              <div class="flex w-full justify-center items-end">
+                <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4 md:w-full text-left">
+                  <label for="hero-field" class="leading-7 text-sm text-gray-600">Search Your Word(s)</label>
+                  <input type="text" id="hero-field" name="word" class="w-full bg-gray-100 bg-opacity-50 rounded focus:ring-2 focus:ring-indigo-200 focus:bg-transparent border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                </div>
+                <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit">Search</button>
+              </div>
+              <p class="text-sm mt-2 text-gray-500 mb-8 w-full">Ex: Good, Excellent, Good Company, Stress</p>
+        </div>
+      </div>
+    </section>
+</form>
+<section class="text-gray-600 body-font max-h-20">
+  <div class="container px-5 py-24 mx-auto flex flex-wrap flex-col">
+    <div class="flex mx-auto flex-wrap mb-20">
+      <a href="http://django-env.eba-3a58wzcn.us-west-2.elasticbeanstalk.com/glassdoor/multiplewords?word={{ word }}" class="sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium inline-flex items-center leading-none border-gray-200 hover:text-gray-900 tracking-wider">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>Glassdoor
+      </a>
+      <a href="#" class="sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium bg-gray-100 inline-flex items-center leading-none border-indigo-500 text-indigo-500 tracking-wider rounded-t">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+        </svg>Indeed
+      </a>
+      <a href="http://django-env.eba-3a58wzcn.us-west-2.elasticbeanstalk.com/both/multiplewords?word={{ word }}" class="sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium inline-flex items-center leading-none border-gray-200 hover:text-gray-900 tracking-wider">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+          <circle cx="12" cy="5" r="3"></circle>
+          <path d="M12 22V8M5 12H2a10 10 0 0020 0h-3"></path>
+        </svg>Both
+      </a>
+    </div>
+  </div>
+</section>
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-2/3 min-w-max mx-auto overflow-auto">
+      <table class="table-auto min-w-max text-left whitespace-no-wrap">
+        <thead>
+          <tr>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Company Name</th>
+            {% for item in word_list %}
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">{{ item }}</th>
+            {% endfor %}
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Total Reviews</th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Company Info</th>
+            <th class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item, count in main_list %}
+          <tr>
+            <td class="px-4 py-3 text-lg text-gray-900">{{ item.company_name }}</td>
+            {% for c in count %}
+              <td class="px-4 py-3">{{ c }}</td>
+            {% endfor %}
+              <td class="px-4 py-3">{{ item.total_reviews }}</td>
+            <td class="px-4 py-3 text-lg text-gray-900"><a href="{{ item.company_url }}" target="_blank"><button>Click here</button></a></td>
+            <td class="w-10 text-center"></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<footer class="text-gray-600 body-font">
+  <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+    <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+      </svg>
+      <span class="ml-3 text-xl">Carmen Reviews</span>
+    </a>
+    <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2021 Default -
+      <a href="https://twitter.com/knyttneve" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">India</a>
+    </p>
+    <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+      <a href="https://www.linkedin.com/company/default-company/" class="ml-3 text-gray-500">
+        <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
+          <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+          <circle cx="4" cy="4" r="2" stroke="none"></circle>
+        </svg>
+      </a>
+    </span>
+  </div>
+</footer>
+<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const rows = document.querySelectorAll("td[data-href]");
+
+			rows.forEach(row => {
+				row.addEventListener("click", () => {
+					window.location.href = row.dataset.href;
+				});
+			});
+		});
+	</script>
+</body>
+</html>
