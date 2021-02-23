@@ -337,18 +337,24 @@ def singlewordboth(request):
             reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
 
             total_count = 0
+            total_heading = 0
+            total_desc = 0
 
             for rev_h in reviews_headings:
                 if str(word) in rev_h.lower():
+                    total_heading += 1
                     total_count += 1
 
             for rev_d in reviews_descriptions:
                 if str(word) in rev_d.lower():
+                    total_desc += 1
                     total_count += 1
 
             result_list = {
                 'company_name': company.companyName,
-                'word_count': total_count
+                'heading_count': total_heading,
+                'desc_count': total_desc,
+                'word_count': total_count,
             }
             list_to_show.append(result_list)
 
@@ -363,10 +369,12 @@ def singlewordboth(request):
 
             for rev_h in reviews_headings:
                 if str(word) in rev_h.lower():
+                    list_to_show[index]['heading_count'] += 1
                     list_to_show[index]['word_count'] += 1
 
             for rev_d in reviews_descriptions:
                 if str(word) in rev_d.lower():
+                    list_to_show[index]['desc_count'] += 1
                     list_to_show[index]['word_count'] += 1
 
         list_to_show = sorted(list_to_show, key=lambda j: j['word_count'], reverse=True)
@@ -376,4 +384,4 @@ def singlewordboth(request):
             'queryset': list_to_show,
         }
 
-        return render(request, 'bothsingleword.html', context)
+        return render(request, 'both-platform-single.html', context)
