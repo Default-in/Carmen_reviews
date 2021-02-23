@@ -70,7 +70,7 @@
 						</thead>
 						<tbody>
 						{% for item in queryset %}
-								<tr data-href="glassdoor/company/{{ item.id }}?word={{ word }}">
+								<tr data-href="company/{{ item.id }}?word={{ word }}">
 									<td class="column3">{{ item.company_name }}</td>
 									<td class="column3">{{ item.wc_in_heading }}</td>
 									<td class="column3">{{ item.wc_in_descriptions }}</td>
