@@ -72,6 +72,77 @@ def table(request):
         'queryset': list_to_show,
     }
 
+    return render(request, 'glassdoorSingleWord.html', context)
+
+def Home(request):
+    qs = GlassdoorReview.objects.all()
+    total = len(qs)
+    word = request.GET.get('word')
+    print(word)
+
+    list_to_show = []
+    for item in qs:
+        # company = GlassdoorReview.objects.get(id=(i+1))
+        company = item
+        total_reviews = len(list(company.reviewDate.splitlines()))
+        if total_reviews != 0:
+            id = item.id
+            reviews_headings = company.reviewHeadings.replace('"', '').split()
+            reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
+            reviews_pros = company.reviewPros.replace('"', '').split()
+            reviews_cons = company.reviewCons.replace('"', '').split()
+
+            total_count = 0
+            total_heading = 0
+            total_desc = 0
+            total_pros = 0
+            total_cons = 0
+            company_url = item.companyUrl
+            for rev_h in reviews_headings:
+                if str(word) in rev_h.lower():
+                    total_heading += 1
+                    total_count += 1
+
+            for rev_d in reviews_descriptions:
+                if str(word) in rev_d.lower():
+                    total_desc += 1
+                    total_count += 1
+
+            for rev_p in reviews_pros:
+                if str(word) in rev_p.lower():
+                    total_pros += 1
+                    total_count += 1
+
+            for rev_c in reviews_cons:
+                if str(word) in rev_c.lower():
+                    total_cons += 1
+                    total_count += 1
+
+            result_list = {
+                'id': id,
+                'company_name': company.companyName,
+                'wc_in_heading': total_heading,
+                'wc_in_descriptions': total_desc,
+                'wc_in_pros': total_pros,
+                'wc_in_cons': total_cons,
+                'total_count': total_count,
+                'total_Reviews': total_reviews,
+                'company_url': company_url,
+            }
+            list_to_show.append(result_list)
+        else:
+            pass
+
+    list_to_show = sorted(list_to_show, key=lambda j: j['total_count'], reverse=True)
+    print(len(list_to_show))
+    # for item in list_to_show:
+    #     print(item)
+
+    context = {
+        'word': word,
+        'queryset': list_to_show,
+    }
+
     return render(request, 'search.html', context)
 
 
