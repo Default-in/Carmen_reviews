@@ -41,6 +41,13 @@ body
 	text-shadow: 0px -2px #669644;
 }
 
+.red
+{
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+}
+
 
 .action-button:active
 {

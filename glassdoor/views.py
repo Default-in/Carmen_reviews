@@ -1,5 +1,6 @@
 from .models import GlassdoorReview
 from django.shortcuts import render
+from indeed.models import *
 
 
 def table(request):
@@ -258,3 +259,70 @@ def test(request):
 
 def testtable(request):
     return render(request, 'glassdoor.html')
+
+
+# Search Single word from both platforms
+def singlewordboth(request):
+    word = request.GET.get('word')
+    glassdoordata = GlassdoorReview.objects.all()
+    indeeddata = IndeedReview.objects.all()
+
+    glassdoor_companies_list = []
+    for item in glassdoordata:
+        glassdoor_companies_list.append(item.companyName)
+
+    indeed_companies_list = []
+    for item in indeeddata:
+        indeed_companies_list.append(item.companyName)
+
+    glassdoor_companies_list = set(glassdoor_companies_list)
+    common_companies_list = glassdoor_companies_list.intersection(indeed_companies_list)
+
+    # List of common companies
+    common_companies_list = list(common_companies_list)
+
+    list_to_show = []
+    for company in glassdoordata:
+        if company.companyName in common_companies_list:
+            reviews_headings = company.reviewHeadings.replace('"', '').split()
+            reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
+
+            total_count = 0
+
+            for rev_h in reviews_headings:
+                if str(word) in rev_h.lower():
+                    total_count += 1
+
+            for rev_d in reviews_descriptions:
+                if str(word) in rev_d.lower():
+                    total_count += 1
+
+            result_list = {
+                'company_name': company.companyName,
+                'word_count': total_count
+            }
+            list_to_show.append(result_list)
+
+    for company in indeeddata:
+        if company.companyName in common_companies_list:
+            reviews_headings = company.reviewHeadings.replace('"', '').split()
+            reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
+
+            index = next((count for (count, name) in enumerate(list_to_show) if name["company_name"] == company.companyName), None)
+
+            for rev_h in reviews_headings:
+                if str(word) in rev_h.lower():
+                    list_to_show[index]['word_count'] += 1
+
+            for rev_d in reviews_descriptions:
+                if str(word) in rev_d.lower():
+                    list_to_show[index]['word_count'] += 1
+
+        list_to_show = sorted(list_to_show, key=lambda j: j['word_count'], reverse=True)
+
+        context = {
+            'word': word,
+            'queryset': list_to_show,
+        }
+
+        return render(request, 'bothsingleword.html', context)
