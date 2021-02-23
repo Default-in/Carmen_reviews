@@ -1,7 +1,7 @@
 {% load static %}
 <html lang="en">
   <head>
-	  <title>Glassdoor</title>
+	  <title>Indeed Search Single Word</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -32,7 +32,7 @@
   </head>
   <body>
     <div class="s130">
-      <form method="GET" action="">
+      <form method="GET" action="/indeed/singleword">
         <div class="inner-form">
           <div class="input-field first-wrap">
             <div class="svg-wrapper">
@@ -50,8 +50,8 @@
       </form>
     </div>
 	<div class="btn-group">
-		<a href="#" class="action-button shadow animate green active-button">Glassdoor</a>
-		<a href="/indeed/singleword?word={{ word }}" class="action-button shadow animate blue">Indeed</a>
+		<a href="/glassdoor/singleword?word={{ word }}" class="action-button shadow animate green">Glassdoor</a>
+		<a href="#" class="action-button shadow animate blue active-button">Indeed</a>
 	</div>
 	<div class="table100">
 					<table>
@@ -60,8 +60,6 @@
 								<th class="column3">Company Name</th>
 								<th class="column3">WC in Headings</th>
 								<th class="column3">WC in Descriptions</th>
-								<th class="column3">WC in Pros</th>
-								<th class="column3">WC in Cons</th>
 								<th class="column3">Total Count</th>
 								<th class="column3">Total Reviews</th>
 								<th class="column3">Company Info</th>
@@ -73,8 +71,6 @@
 									<td class="column3">{{ item.company_name }}</td>
 									<td class="column3">{{ item.wc_in_heading }}</td>
 									<td class="column3">{{ item.wc_in_descriptions }}</td>
-									<td class="column3">{{ item.wc_in_pros }}</td>
-									<td class="column3">{{ item.wc_in_cons }}</td>
 									<td class="column3">{{ item.total_count }}</td>
 									<td class="column3">{{ item.total_Reviews }}</td>
 									<td class="column3"><a href="{{ item.company_url }}" target="_blank"><button>Click here</button></a></td>

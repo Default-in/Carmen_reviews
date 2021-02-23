@@ -51,7 +51,7 @@ def table(request):
         'queryset': list_to_show,
     }
 
-    return render(request, 'indeedtable.html', context)
+    return render(request, 'indeedSingleWord.html', context)
 
 
 def reviewsInfo(request, pk):
@@ -111,3 +111,63 @@ def reviewsInfo(request, pk):
     }
 
     return render(request, 'indeedreviewinfo.html', context)
+
+
+# Multiple Words
+def multiplewords(request):
+    qs = IndeedReview.objects.all()
+    total = len(qs)
+    search_word = request.GET.get('word')
+    word_list = str(search_word).split(",")
+
+    main_list = []
+    company_and_total_review_list = []
+
+    for item in qs:
+        id = item.id
+        url = item.companyUrl
+        sub_main_list = []
+        total_reviews = len(list(item.reviewDate.splitlines()))
+        if total_reviews != 0:
+            for word in word_list:
+                company = item
+                reviews_headings = company.reviewHeadings.replace('"', '').split()
+                reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
+
+                total_count = 0
+                for rev in reviews_headings:
+                    if str(word) in rev.lower():
+                        total_count += 1
+
+                for rev in reviews_descriptions:
+                    if str(word) in rev.lower():
+                        total_count += 1
+
+                sub_main_list.append(total_count)
+
+            results = {
+                'id': id,
+                'company_url': url,
+                'company_name': item.companyName,
+                'total_reviews': total_reviews,
+            }
+            print(results["total_reviews"])
+            company_and_total_review_list.append(results)
+
+            main_list.append(sub_main_list)
+        else:
+            pass
+
+    # list_to_show = sorted(list_to_show, key=lambda j: j['total_count'], reverse=True)
+    # print(len(list_to_show))
+    # for item in list_to_show:
+    #     print(item)
+    #
+    mylist = zip(company_and_total_review_list, main_list)
+    context = {
+        'word': search_word,
+        'word_list': word_list,
+        'main_list': mylist,
+    }
+
+    return render(request, 'indeedmultiplewords.html', context)

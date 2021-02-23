@@ -32,7 +32,7 @@
   </head>
   <body>
     <div class="s130">
-      <form method="GET" action="/glassdoor/table">
+      <form method="GET" action="">
         <div class="inner-form">
           <div class="input-field first-wrap">
             <div class="svg-wrapper">
@@ -50,29 +50,29 @@
       </form>
     </div>
 	<div class="btn-group">
-		<a href="/glassdoor/table?word={{ word }}" class="action-button shadow animate green">Glassdoor</a>
-		<a href="#" class="action-button shadow animate blue">Indeed</a>
+		<a href="#" class="action-button shadow animate green active-button">Glassdoor</a>
+		<a href="/indeed/multiplewords?word={{ word }}" class="action-button shadow animate blue">Indeed</a>
 	</div>
 	<div class="table100">
 					<table>
 						<thead>
 							<tr class="table100-head">
 								<th class="column3">Company Name</th>
-								<th class="column3">WC in Headings</th>
-								<th class="column3">WC in Descriptions</th>
-								<th class="column3">Total Count</th>
+								{% for item in word_list %}
+									<th class="column3">{{ item }}</th>
+								{% endfor %}
 								<th class="column3">Total Reviews</th>
-								<th class="column3">Company Info</th>
+								<th class="column3">More Info</th>
 							</tr>
 						</thead>
 						<tbody>
-						{% for item in queryset %}
-								<tr data-href="company/{{ item.id }}?word={{ word }}">
+						{% for item, count in main_list %}
+								<tr>
 									<td class="column3">{{ item.company_name }}</td>
-									<td class="column3">{{ item.wc_in_heading }}</td>
-									<td class="column3">{{ item.wc_in_descriptions }}</td>
-									<td class="column3">{{ item.total_count }}</td>
-									<td class="column3">{{ item.total_Reviews }}</td>
+									{% for c in count %}
+										<td class="column3">{{ c }}</td>
+									{% endfor %}
+									<td class="column3">{{ item.total_reviews }}</td>
 									<td class="column3"><a href="{{ item.company_url }}" target="_blank"><button>Click here</button></a></td>
 								</tr>
 						{% endfor %}

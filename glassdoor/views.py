@@ -126,6 +126,8 @@ def multiplewords(request):
     company_and_total_review_list = []
 
     for item in qs:
+        id = item.id
+        url = item.companyUrl
         sub_main_list = []
         total_reviews = len(list(item.reviewDate.splitlines()))
         if total_reviews != 0:
@@ -156,6 +158,8 @@ def multiplewords(request):
                 sub_main_list.append(total_count)
 
             results = {
+                'id': id,
+                'company_url': url,
                 'company_name': item.companyName,
                 'total_reviews': total_reviews,
             }
@@ -173,11 +177,12 @@ def multiplewords(request):
     #
     mylist = zip(company_and_total_review_list, main_list)
     context = {
+        'word': search_word,
         'word_list': word_list,
         'main_list': mylist,
     }
 
-    return render(request, 'multipleWords.html', context)
+    return render(request, 'glassdoormultiplewords.html', context)
 
 
 def reviewsInfo(request, pk):
