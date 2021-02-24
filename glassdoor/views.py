@@ -392,8 +392,8 @@ def singlewordboth(request):
 def single_and_multiple_words(request):
     qs = GlassdoorReview.objects.all()
     total = len(qs)
-    word = request.GET.get('word')
-    word_list = str(word).split(",")
+    search_word = request.GET.get('word')
+    word_list = str(search_word).split(",")
 
     if len(word_list) == 1:
         list_to_show = []
@@ -415,22 +415,22 @@ def single_and_multiple_words(request):
                 total_cons = 0
                 company_url = item.companyUrl
                 for rev_h in reviews_headings:
-                    if str(word).lower() in rev_h.lower():
+                    if str(search_word).lower() in rev_h.lower():
                         total_heading += 1
                         total_count += 1
 
                 for rev_d in reviews_descriptions:
-                    if str(word).lower() in rev_d.lower():
+                    if str(search_word).lower() in rev_d.lower():
                         total_desc += 1
                         total_count += 1
 
                 for rev_p in reviews_pros:
-                    if str(word).lower() in rev_p.lower():
+                    if str(search_word).lower() in rev_p.lower():
                         total_pros += 1
                         total_count += 1
 
                 for rev_c in reviews_cons:
-                    if str(word).lower() in rev_c.lower():
+                    if str(search_word).lower() in rev_c.lower():
                         total_cons += 1
                         total_count += 1
 
@@ -453,7 +453,7 @@ def single_and_multiple_words(request):
         print(len(list_to_show))
 
         context = {
-            'word': word,
+            'word': search_word,
             'queryset': list_to_show,
         }
 
@@ -510,7 +510,7 @@ def single_and_multiple_words(request):
 
         mylist = zip(company_and_total_review_list, main_list)
         context = {
-            'word': word,
+            'word': search_word,
             'word_list': word_list,
             'main_list': mylist,
         }

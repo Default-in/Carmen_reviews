@@ -185,8 +185,8 @@ def companyInfo(request):
 def single_and_multiple_words(request):
     qs = IndeedReview.objects.all()
     total = len(qs)
-    word = request.GET.get('word')
-    word_list = str(word).split(",")
+    search_word = request.GET.get('word')
+    word_list = str(search_word).split(",")
 
     if len(word_list) == 1:
         list_to_show = []
@@ -202,12 +202,12 @@ def single_and_multiple_words(request):
                 total_desc = 0
                 company_url = company.companyUrl
                 for rev in reviews_headings:
-                    if str(word).lower() in rev.lower():
+                    if str(search_word).lower() in rev.lower():
                         total_heading += 1
                         total_count += 1
 
                 for rev in reviews_descriptions:
-                    if str(word).lower() in rev.lower():
+                    if str(search_word).lower() in rev.lower():
                         total_desc += 1
                         total_count += 1
 
@@ -228,7 +228,7 @@ def single_and_multiple_words(request):
         print(len(list_to_show))
 
         context = {
-            'word': word,
+            'word': search_word,
             'queryset': list_to_show,
         }
 
@@ -275,7 +275,7 @@ def single_and_multiple_words(request):
 
         mylist = zip(company_and_total_review_list, main_list)
         context = {
-            'word': word,
+            'word': search_word,
             'word_list': word_list,
             'main_list': mylist,
         }
