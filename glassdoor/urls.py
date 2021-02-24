@@ -8,7 +8,7 @@ urlpatterns = [
     # path('glassdoor/singleword', table),
     # path('glassdoor/multiplewords', multiplewords),
     path('glassdoor/companiesinfo', companyInfo),
-    path('glassdoor/company/<int:pk>', reviewsInfo),
+    path('company/<int:pk>', reviewsInfo),
     path('', single_and_multiple_words),
     path('test', test),
     path('glassdoor/', testtable),

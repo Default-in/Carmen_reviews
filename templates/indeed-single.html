@@ -81,7 +81,7 @@
         <tbody>
         {% for item in queryset %}
           <tr>
-            <td data-href="company/{{ item.id }}?word={{ word }}" class="px-4 py-3 text-lg text-gray-900">{{ item.company_name }}</td>
+            <td data-href="indeed/company/{{ item.id }}?word={{ word }}" class="px-4 py-3 text-lg text-gray-900">{{ item.company_name }}</td>
             <td class="px-4 py-3">{{ item.wc_in_heading }}</td>
             <td class="px-4 py-3">{{ item.wc_in_descriptions }}</td>
             <td class="px-4 py-3">{{ item.total_count }}</td>
