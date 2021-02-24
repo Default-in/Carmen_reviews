@@ -278,7 +278,7 @@ def reviewsInfo(request, pk):
 
     total_reviews = len(date_list)
     for i in range(total_reviews):
-        if word in headings[i].lower() or word in descriptions[i].lower() or word in pros[i].lower() or word in cons[
+        if word.lower() in headings[i].lower() or word.lower() in descriptions[i].lower() or word.lower() in pros[i].lower() or word.lower() in cons[
             i].lower():
 
             result_list = {
