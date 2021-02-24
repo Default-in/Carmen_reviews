@@ -16,7 +16,7 @@ options.binary_location = binary_location
 options.add_argument(f'user-agent={user_agent}')
 
 driver = webdriver.Chrome(executable_path=driver_location, chrome_options=options)
-driver.implicitly_wait(30)
+driver.implicitly_wait(10)
 
 
 # Wait

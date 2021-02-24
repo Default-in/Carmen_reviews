@@ -1,4 +1,4 @@
-companies_list = ["McDonald's", "Lowe's Home Improvement", 'NVIDIA', 'DocuSign', 'HubSpot', 'Power Home Remodeling',
+companies_list = ['NVIDIA', 'DocuSign', 'HubSpot', 'Power Home Remodeling',
                   'SAP', 'Carnegie Mellon University', 'E. & J. Gallo Winery', 'Brigham Young University (BYU)', 'Bain & Company',
                   'University of Michigan', 'Princeton University', 'MathWorks', 'Delta Air Lines', 'MIT', 'Salesforce', 'Cornell University',
                   'University of Illinois at Urbana-Champaign', 'UC Santa Barbara', 'Northside Hospital', 'Southwest Airlines',
