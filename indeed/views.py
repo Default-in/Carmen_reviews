@@ -179,3 +179,105 @@ def companyInfo(request):
     }
 
     return render(request, 'indeed-companies.html', context)
+
+
+# Both single and multiple words
+def single_and_multiple_words(request):
+    qs = IndeedReview.objects.all()
+    total = len(qs)
+    word = request.GET.get('word')
+    word_list = str(word).split(",")
+
+    if len(word_list) == 1:
+        list_to_show = []
+        for company in qs:
+            total_reviews = len(list(company.reviewDate.splitlines()))
+            if total_reviews != 0:
+                id = company.id
+                reviews_headings = company.reviewHeadings.replace('"', '').split()
+                reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
+
+                total_count = 0
+                total_heading = 0
+                total_desc = 0
+                company_url = company.companyUrl
+                for rev in reviews_headings:
+                    if str(word).lower() in rev.lower():
+                        total_heading += 1
+                        total_count += 1
+
+                for rev in reviews_descriptions:
+                    if str(word).lower() in rev.lower():
+                        total_desc += 1
+                        total_count += 1
+
+                result_list = {
+                    'id': id,
+                    'company_name': company.companyName,
+                    'wc_in_heading': total_heading,
+                    'wc_in_descriptions': total_desc,
+                    'total_count': total_count,
+                    'total_Reviews': total_reviews,
+                    'company_url': company_url,
+                }
+                list_to_show.append(result_list)
+            else:
+                pass
+
+        list_to_show = sorted(list_to_show, key=lambda j: j['total_count'], reverse=True)
+        print(len(list_to_show))
+
+        context = {
+            'word': word,
+            'queryset': list_to_show,
+        }
+
+        return render(request, 'indeed-single.html', context)
+
+    else:
+        main_list = []
+        company_and_total_review_list = []
+
+        for item in qs:
+            id = item.id
+            url = item.companyUrl
+            sub_main_list = []
+            total_reviews = len(list(item.reviewDate.splitlines()))
+            if total_reviews != 0:
+                for word in word_list:
+                    company = item
+                    reviews_headings = company.reviewHeadings.replace('"', '').split()
+                    reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
+
+                    total_count = 0
+                    for rev in reviews_headings:
+                        if str(word) in rev.lower():
+                            total_count += 1
+
+                    for rev in reviews_descriptions:
+                        if str(word) in rev.lower():
+                            total_count += 1
+
+                    sub_main_list.append(total_count)
+
+                results = {
+                    'id': id,
+                    'company_url': url,
+                    'company_name': item.companyName,
+                    'total_reviews': total_reviews,
+                }
+                print(results["total_reviews"])
+                company_and_total_review_list.append(results)
+
+                main_list.append(sub_main_list)
+            else:
+                pass
+
+        mylist = zip(company_and_total_review_list, main_list)
+        context = {
+            'word': word,
+            'word_list': word_list,
+            'main_list': mylist,
+        }
+
+        return render(request, 'indeed-multiple-words.html', context)
