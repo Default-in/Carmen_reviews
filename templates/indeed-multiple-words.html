@@ -86,7 +86,8 @@
               <td class="px-4 py-3">{{ c }}</td>
             {% endfor %}
               <td class="px-4 py-3">{{ item.total_reviews }}</td>
-            <td class="px-4 py-3 text-lg text-gray-900"><a href="{{ item.company_url }}" target="_blank"><button>Click here</button></a></td>
+
+            <td class="px-4 py-3 text-lg text-gray-900"> <a href="{{ item.company_url }}" target="_blank" class="text-indigo-500 mt-4"><button class="inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded text-sm">More Info</button></a></td>
             <td class="w-10 text-center"></td>
           </tr>
         {% endfor %}

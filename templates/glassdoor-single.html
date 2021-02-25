@@ -66,7 +66,7 @@
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto">
     <div class="lg:w-2/3 min-w-max mx-auto overflow-auto">
-      <table class="table-auto min-w-max text-left whitespace-no-wrap">
+      <table class="table-auto w-screen text-left whitespace-no-wrap">
         <thead>
           <tr>
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Company Name</th>
@@ -76,6 +76,7 @@
               <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Cons</th>
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Total Count</th>
             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Total Reviews</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Matched Reviews</th>
               <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Company Info</th>
             <th class="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
           </tr>
@@ -83,14 +84,16 @@
         <tbody>
         {% for item in queryset %}
           <tr>
-            <td data-href="company/{{ item.id }}?word={{ word }}" class="px-4 py-3 text-lg text-gray-900">{{ item.company_name }}</td>
+            <td class="px-4 py-3 text-lg text-gray-900">{{ item.company_name }}</td>
             <td class="px-4 py-3">{{ item.wc_in_heading }}</td>
             <td class="px-4 py-3">{{ item.wc_in_descriptions }}</td>
               <td class="px-4 py-3">{{ item.wc_in_pros }}</td>
             <td class="px-4 py-3">{{ item.wc_in_cons }}</td>
             <td class="px-4 py-3">{{ item.total_count }}</td>
               <td class="px-4 py-3">{{ item.total_Reviews }}</td>
-            <td class="px-4 py-3 text-lg text-gray-900"><a href="{{ item.company_url }}" target="_blank"><button>Click here</button></a></td>
+            <td data-href="company/{{ item.id }}?word={{ word }}" class="px-4 py-3 text-lg text-gray-900"><button class="inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded text-sm">Reviews</button></td>
+            <td class="px-4 py-3 text-lg text-gray-900"> <a href="{{ item.company_url }}" target="_blank" class="text-indigo-500 mt-4"><button class="inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded text-sm">More Info</button></a></td>
+          </a></td>
             <td class="w-10 text-center"></td>
           </tr>
         {% endfor %}
