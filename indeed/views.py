@@ -1,5 +1,43 @@
 from django.shortcuts import render
 from .models import IndeedReview
+import csv
+from django.http import HttpResponse
+
+
+def download_csv_single_word(request, pk):
+    qs = IndeedReview.objects.get(pk=pk)
+    company_name = qs.companyName
+    company_desc = qs.companyDesc
+    word = request.GET.get('word')
+    print(word)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={word}-{company_name}.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Heading', 'Description'])
+
+
+    list_to_show = []
+    date_list = list(qs.reviewDate.splitlines())
+    headings = list(qs.reviewHeadings.splitlines())
+    descriptions = list(qs.reviewDescriptions.splitlines())
+
+    total_reviews = len(date_list)
+    for i in range(total_reviews):
+        if word.lower() in headings[i].lower() or word.lower() in descriptions[i].lower():
+
+            # result_list = {
+            #     "review_date": date_list[i],
+            #     "review_heading": headings[i],
+            #     "review_descriptions": descriptions[i],
+            # }
+            writer.writerow([headings[i], descriptions[i]])
+
+            # list_to_show.append(result_list)
+        else:
+            pass
+
+    return response
 
 
 # Create your views here.

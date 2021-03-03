@@ -1,6 +1,47 @@
 from .models import GlassdoorReview
 from django.shortcuts import render
 from indeed.models import *
+import csv
+from django.http import HttpResponse
+
+
+def download_csv_single_word(request, pk):
+    qs = GlassdoorReview.objects.get(pk=pk)
+    company_name = qs.companyName
+    company_desc = qs.companyDesc
+    word = request.GET.get('word')
+    print(word)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={word}-{company_name}.csv'
+
+    writer = csv.writer(response)
+    writer.writerow(['Heading', 'Description', 'Pros', 'Cons'])
+
+
+    list_to_show = []
+    date_list = list(qs.reviewDate.splitlines())
+    pros = list(qs.reviewPros.splitlines())
+    cons = list(qs.reviewCons.splitlines())
+    headings = list(qs.reviewHeadings.splitlines())
+    descriptions = list(qs.reviewDescriptions.splitlines())
+
+    total_reviews = len(date_list)
+    for i in range(total_reviews):
+        if word.lower() in headings[i].lower() or word.lower() in descriptions[i].lower() or word.lower() in pros[i].lower() or word.lower() in cons[i].lower():
+            # result_list = {
+            #     "review_date": date_list[i],
+            #     "review_heading": headings[i],
+            #     "review_descriptions": descriptions[i],
+            #     "review_pros": pros[i],
+            #     "review_cons": cons[i],
+            # }
+            writer.writerow([headings[i], descriptions[i], pros[i], cons[i]])
+
+            # list_to_show.append(result_list)
+        else:
+            pass
+
+    return response
 
 
 def table(request):
@@ -278,7 +319,8 @@ def reviewsInfo(request, pk):
 
     total_reviews = len(date_list)
     for i in range(total_reviews):
-        if word.lower() in headings[i].lower() or word.lower() in descriptions[i].lower() or word.lower() in pros[i].lower() or word.lower() in cons[
+        if word.lower() in headings[i].lower() or word.lower() in descriptions[i].lower() or word.lower() in pros[
+            i].lower() or word.lower() in cons[
             i].lower():
 
             result_list = {
