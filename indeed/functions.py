@@ -40,8 +40,11 @@ def reviews():
                     review_cons += f" \n"
             try:
                 items = list(driver.find_elements_by_css_selector('a.icl-Button.icl-Button--tertiary.icl-Button--lg'))
-                items[-1].click()
-                print("Clicked")
+                if items[-1].text == "Next":
+                    items[-1].click()
+                    print("Clicked")
+                else:
+                    break
             except Exception as expc:
                 print(expc)
                 break
