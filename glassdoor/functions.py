@@ -22,9 +22,9 @@ def login():
         sign_in.click()
         wait(10)
         driver.get(
-            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=8&isHiringSurge=0'
+            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=14&isHiringSurge=0'
             '&locId=1&locType=N&locName=US')
-        wait(15)
+        wait(45)
 
     except Exception as e:
         print(e)
@@ -41,7 +41,7 @@ def login():
         sign_in.click()
         wait(10)
         driver.get(
-            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=12&isHiringSurge=0'
+            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=14&isHiringSurge=0'
             '&locId=1&locType=N&locName=US')
         wait(15)
 
@@ -315,7 +315,7 @@ def scrap_data():
 
 
 def companies(i):
-    j = 12
+    j = 13
     print("Start")
     try:
         while j < 100:
