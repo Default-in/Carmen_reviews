@@ -1,12 +1,13 @@
 from .subfunctions import *
 from .models import *
+from .mail import *
 from .glassdoor_cookies import *
 
 
 def login():
     try:
         driver.get('https://www.glassdoor.com/index.htm')
-        wait(60)
+        wait(30)
         driver.maximize_window()
         print(driver.title)
         # wait(10)
