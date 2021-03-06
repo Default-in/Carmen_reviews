@@ -7,7 +7,7 @@ from .glassdoor_cookies import *
 def login():
     try:
         driver.get('https://www.glassdoor.co.in/index.htm')
-        wait(5)
+        wait(30)
         driver.maximize_window()
         print(driver.title)
         # wait(10)
