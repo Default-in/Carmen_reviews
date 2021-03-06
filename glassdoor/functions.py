@@ -6,8 +6,8 @@ from .glassdoor_cookies import *
 
 def login():
     try:
-        driver.get('https://www.glassdoor.com/index.htm')
-        wait(30)
+        driver.get('https://www.glassdoor.co.in/index.htm')
+        wait(5)
         driver.maximize_window()
         print(driver.title)
         # wait(10)
@@ -24,7 +24,7 @@ def login():
         sign_in.click()
         wait(10)
         driver.get(
-            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=14&isHiringSurge=0'
+            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=17&isHiringSurge=0'
             '&locId=1&locType=N&locName=US')
         wait(45)
 
@@ -43,7 +43,7 @@ def login():
         sign_in.click()
         wait(10)
         driver.get(
-            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=14&isHiringSurge=0'
+            'https://www.glassdoor.com/Explore/browse-companies.htm?overall_rating_low=3.5&page=17&isHiringSurge=0'
             '&locId=1&locType=N&locName=US')
         wait(15)
 
@@ -174,12 +174,15 @@ def review_scrapped(j):
                 cons += f'{review_cons}\n'
 
             if i == 1:
-                driver.find_element_by_xpath(
-                    '//*[@id="NodeReplace"]/main/div/div[1]/div/div[8]/div/div[1]/button[7]').click()
+                driver.find_element_by_css_selector('button.nextButton.css-sed91k').click()
+                # driver.find_element_by_xpath(
+                #     '//*[@id="NodeReplace"]/main/div/div[1]/div/div[4]/div/div[1]/button[7]').click()
                 wait(1)
             else:
-                driver.find_element_by_xpath(
-                    '//*[@id="NodeReplace"]/main/div/div[1]/div/div[7]/div/div[1]/button[7]').click()
+                driver.find_element_by_css_selector('button.nextButton.css-sed91k').click()
+                # driver.find_element_by_xpath(
+                #     '//*[@id="NodeReplace"]/main/div/div[1]/div/div[7]/div/div[1]/button[7]').click()
+                # //*[@id="NodeReplace"]/main/div/div[1]/div[4]/div/div[1]/button[7]
                 wait(1)
             i += 1
     except Exception as exp:
@@ -317,22 +320,27 @@ def scrap_data():
 
 
 def companies(i):
-    j = 13
+    j = 15
     print("Start")
     try:
         while j < 100:
             print(f'Page Number - {j}')
             try:
+                print("Scrap")
                 scrap_data()
             except Exception as ex:
                 print(ex)
 
-            driver.close()
-
-            # driver.find_element_by_xpath(
-            #     '//*[@id="ReactCompanyExplorePageContainer"]/div/div/div/div/div[3]/div/ul/li[7]/button').click()
-            # wait(20)
-            # j += 1
+            # driver.close()
+            k = 1
+            for item in driver.find_elements_by_css_selector('button.pagination__PaginationStyles__paginationButton.common__commonStyles__offScreen.d-flex.align-items-center.justify-content-center'):
+                if k == 2:
+                    item.click()
+                    wait(10)
+                else:
+                    pass
+                k += 1
+            j += 1
 
     except Exception as ex:
         print(ex)
