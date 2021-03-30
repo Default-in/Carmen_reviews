@@ -1,1 +1,0 @@
-web: gunicorn reviewsscrapper.wsgi --log-file -
