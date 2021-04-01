@@ -151,11 +151,11 @@ def multiplewords(request):
 
                 total_count = 0
                 for rev in reviews_headings:
-                    if str(word) in rev.lower():
+                    if str(word.strip()) in rev.lower():
                         total_count += 1
 
                 for rev in reviews_descriptions:
-                    if str(word) in rev.lower():
+                    if str(word.strip()) in rev.lower():
                         total_count += 1
 
                 sub_main_list.append(total_count)
@@ -289,11 +289,11 @@ def single_and_multiple_words(request):
 
                     total_count = 0
                     for rev in reviews_headings:
-                        if str(word) in rev.lower():
+                        if str(word.strip()) in rev.lower():
                             total_count += 1
 
                     for rev in reviews_descriptions:
-                        if str(word) in rev.lower():
+                        if str(word.strip()) in rev.lower():
                             total_count += 1
 
                     sub_main_list.append(total_count)

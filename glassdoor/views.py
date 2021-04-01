@@ -251,19 +251,19 @@ def multiplewords(request):
 
                 total_count = 0
                 for rev in reviews_headings:
-                    if str(word).lower() in rev.lower():
+                    if str(word.strip()).lower() in rev.lower():
                         total_count += 1
 
                 for rev in reviews_descriptions:
-                    if str(word).lower() in rev.lower():
+                    if str(word.strip()).lower() in rev.lower():
                         total_count += 1
 
                 for rev in reviews_pros:
-                    if str(word).lower() in rev.lower():
+                    if str(word.strip()).lower() in rev.lower():
                         total_count += 1
 
                 for rev in reviews_cons:
-                    if str(word).lower() in rev.lower():
+                    if str(word.strip()).lower() in rev.lower():
                         total_count += 1
 
                 sub_main_list.append(total_count)
@@ -520,19 +520,19 @@ def single_and_multiple_words(request):
 
                     total_count = 0
                     for rev in reviews_headings:
-                        if str(word).lower() in rev.lower():
+                        if str(word.strip()).lower() in rev.lower():
                             total_count += 1
 
                     for rev in reviews_descriptions:
-                        if str(word).lower() in rev.lower():
+                        if str(word.strip()).lower() in rev.lower():
                             total_count += 1
 
                     for rev in reviews_pros:
-                        if str(word).lower() in rev.lower():
+                        if str(word.strip()).lower() in rev.lower():
                             total_count += 1
 
                     for rev in reviews_cons:
-                        if str(word).lower() in rev.lower():
+                        if str(word.strip()).lower() in rev.lower():
                             total_count += 1
 
                     sub_main_list.append(total_count)
@@ -653,11 +653,11 @@ def both_platforms(request):
                     total_count = 0
 
                     for rev_h in reviews_headings:
-                        if str(word) in rev_h.lower():
+                        if str(word.strip()) in rev_h.lower():
                             total_count += 1
 
                     for rev_d in reviews_descriptions:
-                        if str(word) in rev_d.lower():
+                        if str(word.strip()) in rev_d.lower():
                             total_count += 1
 
                     sub_main_list.append(total_count)
@@ -683,11 +683,11 @@ def both_platforms(request):
                     reviews_descriptions = company.reviewDescriptions.replace('"', '').split()
 
                     for rev_h in reviews_headings:
-                        if str(word) in rev_h.lower():
+                        if str(word.strip()) in rev_h.lower():
                             main_list[index][i] += 1
 
                     for rev_d in reviews_descriptions:
-                        if str(word) in rev_d.lower():
+                        if str(word.strip()) in rev_d.lower():
                             main_list[index][i] += 1
                     i += 1
 
