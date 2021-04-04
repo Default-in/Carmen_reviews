@@ -20,6 +20,15 @@ class GlassdoorReview(models.Model):
     reviewCons = models.TextField(null=True)
     reviewDate = models.TextField(null=True)
     companyUrl = models.TextField(null=True)
+    employeesRatings = models.TextField(null=True)
+
+    def __str__(self):
+        return self.companyName
+
+
+class GlassdoorCompanies(models.Model):
+    companyName = models.CharField(max_length=30, null=True)
+    companyReviewPageUrl = models.TextField(null=True)
 
     def __str__(self):
         return self.companyName

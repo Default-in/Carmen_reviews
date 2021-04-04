@@ -2,5 +2,6 @@ from .functions import *
 
 print('Login')
 login()
-print('Start Scrapping')
-companies(5)
+# scrap_companies_name_and_review_page_url()
+scrap_companies_reviews(500, 100)
+print("Finished")
